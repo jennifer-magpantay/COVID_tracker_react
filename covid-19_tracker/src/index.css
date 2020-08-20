@@ -1,7 +1,7 @@
 /********** GLOBAL **********/
 * {
   box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 :root {
@@ -54,14 +54,85 @@ ul {
 
 /********** HEADER  **********/
 .header_dropdown {
-  width: 240px;
+  width: 200px;
   background-color: var(--lg-color);
   cursor: pointer;
 }
 
+/********** INFOBOX  **********/
+.infobox_card {
+  width: 33%;
+  margin: 1% 0 1% 0;
+}
 
+.infoBox_title {
+}
 
+.infoBox_cases {
+}
+
+.infoBox_total {
+}
+
+/********** TABLE  & GRAPH **********/
+.table_card, .graph_card {
+  width: 100%;
+}
+
+.graph_card {
+  margin-top: 2%;
+}
+
+.table_card h4, .graph_card h4 {
+  padding-left: 4%;
+  margin-bottom: 0;
+  color: var(--dk-gray);
+}
+
+.table {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 52vh;
+}
+
+.table td {
+  padding: 0.3rem;
+}
+
+.table tr{ 
+  display: flex;
+  justify-content: space-between;
+}
+
+.table tr:nth-of-type(odd) {
+  background-color: var(--lg-gray);
+}
+/********** MAP  **********/
+.map_card {
+  height: 57vh;
+  margin: 1%;
+  background-color: var(--white);
+  padding: 1%;
+  border-radius: 4px;
+  box-shadow: 0 0 6px -4px rgba(0, 0, 0, 0.8);
+}
+.map_card .leaflet-container {
+  height: 100%;
+  border-radius: 4px; 
+}
 
 /********** @MEDIA SCREEN  **********/
 @media only screen and (max-width: 800px) {
+  .header_dropdown {
+    width: 150px;
+  }
+
+  .infobox_card {
+    width: 100%;
+    margin-bottom: 2%;
+  }
+
+  .table_card, .graph_card {
+    font-size: 14px;
+  }
 }

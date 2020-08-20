@@ -12,7 +12,6 @@ const FooterWrapper = styled.footer`
   height: auto;
   padding: 1% 2%;
   background-color: var(--black);
-  border-top: 1px solid var(--lg-color);
   color: var(--lg-color);
   font-size: 12px;
   
