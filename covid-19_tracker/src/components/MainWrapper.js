@@ -6,6 +6,7 @@ const MainWrapper = styled.main`
   height: 100vh;
  
   @media (max-width: 800px) {
+    border-bottom: 1px solid var(--blue);
     width: 95vw;
   }
 `;

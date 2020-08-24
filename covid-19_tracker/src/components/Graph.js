@@ -84,7 +84,7 @@ function Graph({ casesType= "cases" }) {
     //use async and await to fecth data using a endpoint from the API
     //we are using an endpoint from last 3 months
     const fetchData = async () => {
-      await fetch("https://disease.sh/v3/covid-19/historical/all?lastdays=120")
+      await fetch("https://disease.sh/v3/covid-19/historical/all?lastdays=180")
         .then((response) => response.json())
         .then((data) => {
           let chartData = buildChartData(data, casesType);
@@ -96,7 +96,7 @@ function Graph({ casesType= "cases" }) {
 
   return (
     <Card className="graph_card">
-      <h4>GRAPHIC</h4>
+      <h4>SPREADING GRAPH&nbsp;&nbsp;|&nbsp;&nbsp;SINCE MARCH</h4>
       <CardContent>
         {/* check if the data existis, if its lenght is greater than 0 */}
         {/* then, if the data existis, then, do whatever is inside () */}

@@ -1,19 +1,54 @@
 import React from "react";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import styled from "styled-components";
+import { Card, CardContent } from "@material-ui/core";
+
+const Overline = styled.p`
+  margin: 0;
+  color: #636e72;
+  font-size: 12px;
+  letter-spacing: 1.5;
+  text-transform: uppercase;
+
+  @media (max-width: 800px) {
+    font-size: 10px;
+  }
+`;
+
+const Body = styled.p`
+  margin: 5px 0 5px 0;
+  font-size: 22px;
+  font-weight: bold;
+
+  @media (max-width: 800px) {
+    font-size: 16px;
+  }
+`;
+
+const Caption = styled.p` 
+margin: 0;
+  color: #636e72;
+  font-size: 16px;
+  letter-spacing: 0.4;
+
+  @media (max-width: 800px) {
+    font-size: 12px;
+  }
+`;
 
 function InfoBox({ title, cases, total }) {
   return (
-    <Card className="infobox_card">
-        {/* each card content will contain: own title, own number, own current number of cases 
+    <Card className="infoBox_card">
+      {/* each card content will contain: own title, own number, own current number of cases 
         and total number of cases  */}
-      <CardContent>
+      <CardContent className="content">
         {/* Title */}
-        <Typography className="infoBox_title" color="textSecondary">{title}</Typography>
+        <Overline className="infoBox_overline">{title}</Overline>
         {/* Number of cases */}
-        <h2 className="infoBox_cases">{cases}</h2>
+        <Body className="infoBox_body">{cases}</Body>
         {/* Total of deaths */}
-        <Typography className="infoBox_total" 
-        color="textSecondary">{total} total</Typography>
+        <Caption className="infoBox_caption" color="textSecondary">
+          {total} total
+        </Caption>
       </CardContent>
     </Card>
   );

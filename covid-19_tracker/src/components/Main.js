@@ -3,13 +3,15 @@ import styled from "styled-components";
 import { FormControl, Select, MenuItem } from "@material-ui/core";
 import MainWrapper from "./MainWrapper";
 import Logo from "../assets/images/logo_app.png";
-import InfoBox from "../components/InfoBox";
+import InfoBoxWrapper from './InfoBoxWrapper';
+import InfoBox from "./InfoBox";
 import Wrapper from "./Wrapper";
 import Map from "./Map";
 import AsideWrapper from "./AsideWrapper";
 import Table from "./Table";
 import Graph from "./Graph";
-import { sortData } from "../util";
+import { sortData, PrintStat } from "../util";
+import numeral from 'numeral';
 
 const LogoApp = styled.img`
   width: 160px;
@@ -18,6 +20,7 @@ const LogoApp = styled.img`
     width: 120px;
   }
 `;
+
 
 //this is the main component of the app
 //here are set the main content (header, infobox, map) and aside content (table, graphs)
@@ -34,9 +37,9 @@ function Main() {
   const [tableData, setTableData] = useState([]);
 
   // useState for the map center & zoom props
-  const [mapCenter, setMapCenter] = useState({lat: 34.80746, lng: -40.4796});
-  const [mapZoom, setMapZoom] = useState();
-
+  const [mapCenter, setMapCenter] = useState({ lat: 0, lng: 0});
+  const [mapZoom, setMapZoom] = useState(1.5); //the value 3 gives enough zoom scale that would allows to see the entire map
+  const [mapCountries, setMapCountries] = useState([]);
   // useEffect: runs a piece of code based on a given condition
   // useEffect(() => {},[]);
 
@@ -60,6 +63,7 @@ function Main() {
           const sortedData = sortData(data);
           setTableData(sortedData);
           setCountries(countries);
+          setMapCountries(data);
         });
     };
     getCountriesData();
@@ -71,7 +75,7 @@ function Main() {
     fetch("https://disease.sh/v3/covid-19/all")
       .then((response) => response.json())
       .then((data) => {
-        setCountryInfo(data);
+        setCountryInfo(data);            
       });
   }, []);
 
@@ -95,9 +99,12 @@ function Main() {
       .then((data) => {
         setCountry(countryCode);
         setCountryInfo(data);
+
+        setMapCenter([data.countryInfo.lat,
+          data.countryInfo.long]);
+        setMapZoom(4);
       });
   };
-
 
   return (
     <Wrapper>
@@ -122,31 +129,36 @@ function Main() {
         </Wrapper>
 
         {/* adding here the info boxes */}
+        <InfoBoxWrapper>
+        <h4>LIVE CASES&nbsp;&nbsp;|&nbsp;&nbsp;NUMBERS</h4>
+        <p className="caption">Data sourced from Worldometers, updated every 10 minutes</p>
         <Wrapper>
           {/* pass the variable countryInfo into each infobox to display the figures about eh choosen country */}
+          {/* to populate the boxes, get from API the cases registered today and the total */}
+         
           <InfoBox
             title="New Cases"
             className="cases"
-            cases={countryInfo.todayCases}
-            total={countryInfo.cases}
+            cases={PrintStat(countryInfo.todayCases)} 
+            total={numeral(countryInfo.cases).format(0,0)}
           />
           <InfoBox
             title="Recovered"
             className="recovered"
-            cases={countryInfo.todayRecovered}
-            total={countryInfo.recovered}
-          />
+            cases={PrintStat(countryInfo.todayRecovered)}
+            total={numeral(countryInfo.recovered).format(0,0)}
+                     />
           <InfoBox
             title="Deaths"
             className="deaths"
-            cases={countryInfo.todayDeaths}
-            total={countryInfo.deaths}
+            cases={PrintStat(countryInfo.todayDeaths)}
+            total={numeral(countryInfo.deaths).format(0,0)}
           />
         </Wrapper>
+        </InfoBoxWrapper>
         <Map 
-        center={mapCenter}
-        zoom={mapZoom}
-        />
+        countries={mapCountries}
+        center={mapCenter} zoom={mapZoom} />
       </MainWrapper>
 
       {/* adding the aside content here */}

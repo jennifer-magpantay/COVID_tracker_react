@@ -14,9 +14,9 @@ const FooterWrapper = styled.footer`
   background-color: var(--black);
   color: var(--lg-color);
   font-size: 12px;
-  
-  & h4{
-    letter-spacing: 1px;
+
+  & h5 {
+    letter-spacing: 2px;
   }
 
   @media (max-width: 800px) {
@@ -34,6 +34,10 @@ const ContentItem = styled.div`
 
   @media (max-width: 800px) {
     margin-bottom: 10px;
+
+    & p {
+      font-weight: 300;
+    }
   }
 `;
 
@@ -47,7 +51,7 @@ function Footer() {
   return (
     <FooterWrapper>
       <ContentItem>
-        <h4>WHO IS THAT GIRL?</h4>
+        <h5>WHO IS THAT GIRL?</h5>
         <p>Jennifer Magpantay</p>
         <p>
           IT graduated, lifelong learner, food lover & crazy cat lady. And
@@ -56,7 +60,7 @@ function Footer() {
         <p>Currently based in Dublin, IRL</p>
       </ContentItem>
       <ContentItem>
-        <h4>RESOURCES</h4>
+        <h5>RESOURCES</h5>
         <p>
           <a href="https://www.alura.com.br/">Alura</a>&nbsp;&nbsp;|&nbsp;&nbsp;
           <a href="https://www.youtube.com/channel/UCqrILQNl5Ed9Dz6CGMyvMTQ">
@@ -75,7 +79,7 @@ function Footer() {
       </ContentItem>
 
       <ContentItem>
-        <h4>LET'S STAY CONNECTED</h4>
+        <h5>LET'S STAY CONNECTED</h5>
         <p>
           <a href="mailto:jennifer.magpantay@gmail.com">popme@message.com</a>
         </p>
