@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+//main wrapper used with different components
+
 const Wrapper = styled.div`
   width: 100%;
   display: flex;  

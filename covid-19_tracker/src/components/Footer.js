@@ -5,6 +5,7 @@ import github from "../assets/images/github_white.png";
 import linkedin from "../assets/images/linkedin_white.png";
 
 //footer is another component that will be used in all screens - it will imported by DefaultTemplate
+
 const FooterWrapper = styled.footer`
   display: flex;
   flex-wrap: wrap;
@@ -13,11 +14,6 @@ const FooterWrapper = styled.footer`
   padding: 1% 2%;
   background-color: var(--black);
   color: var(--lg-color);
-  font-size: 12px;
-
-  & h5 {
-    letter-spacing: 2px;
-  }
 
   @media (max-width: 800px) {
     display: block;
@@ -28,8 +24,12 @@ const ContentItem = styled.div`
   flex: 1 0 350px;
   margin: 5px;
 
+  & h5 {
+    letter-spacing: 2px;
+  }
+
   & p {
-    line-height: normal;
+    font-size: 12px;
   }
 
   @media (max-width: 800px) {
@@ -47,6 +47,13 @@ const Icon = styled.img`
   margin: 0;
 `;
 
+const Copyright = styled.p`
+
+  @media (max-width: 800px) {
+    font-size: 10px;
+  }
+`;
+
 function Footer() {
   return (
     <FooterWrapper>
@@ -62,7 +69,6 @@ function Footer() {
       <ContentItem>
         <h5>RESOURCES</h5>
         <p>
-          <a href="https://www.alura.com.br/">Alura</a>&nbsp;&nbsp;|&nbsp;&nbsp;
           <a href="https://www.youtube.com/channel/UCqrILQNl5Ed9Dz6CGMyvMTQ">
             Clever Programmer
           </a>
@@ -103,10 +109,10 @@ function Footer() {
       </ContentItem>
       <hr />
       <ContentItem>
-        <p>
+        <Copyright>
           Copyright &copy; 2020 Developed by Jennifer Magpantay using HTML5,
           CSS3 & React&nbsp;&nbsp;|&nbsp;&nbsp;Clever Programmer
-        </p>
+        </Copyright>
       </ContentItem>
     </FooterWrapper>
   );

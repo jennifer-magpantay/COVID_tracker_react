@@ -5,16 +5,16 @@ import { Circle, Popup } from "react-leaflet";
 //set for each type of case to receive specific styke
 const casesTypeColors = {  
   cases: {
-    hex: "#2980b9",
-    multiplier: 800,
+    hex: "#2980b9", //var(--blue)
+    multiplier: 1200, //bigger radius
   },
   recovered: {
-    hex: "#bdc3c7",
-    multiplier: 1200,
+    hex: "#16a085", //var(--green)
+    multiplier: 800, //medium radius
   },
   deaths: {
-    hex: "#ef3629",
-    multiplier: 2000,
+    hex: "#ef3629", //var(--warning)
+    multiplier: 2000, //smaller radius
   },
 };
 

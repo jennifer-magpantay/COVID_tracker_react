@@ -8,13 +8,13 @@ const InfoBoxWrapper = styled.div`
     padding-left: 4%;
     margin-bottom: 0;
     font-size: 14px;
-  
-    @media (max-width: 800px){
-    .caption {
-        font-size: 12px;
+
+    @media (max-width: 800px) {
+      .caption {
+        font-size: 10px;
       }
     }
-  }  
+  }
 `;
 
 export default InfoBoxWrapper;

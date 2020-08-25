@@ -20,13 +20,12 @@ const MapContainer = styled.div`
   }
 
   @media (max-width: 800px){
-   height: 62vh;
+   height: 59vh;
   }
 `;
 
 function Map({ countries, casesType, center, zoom }) {
-  return (
-  
+  return (  
     <MapContainer>
       <MapContent center={center} zoom={zoom}>
         <TileLayer
@@ -35,8 +34,7 @@ function Map({ countries, casesType, center, zoom }) {
         />
         {showDataOnMap(countries, casesType)}
       </MapContent>
-    </MapContainer>
-   
+    </MapContainer>   
   );
 }
 

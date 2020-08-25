@@ -35,19 +35,24 @@ margin: 0;
   }
 `;
 
-function InfoBox({ title, cases, total }) {
+// this is one infobox, that will be replied 3 times into the main.js - cases, recovered & deaths
+// the infoboxes will display the worldwide info as default when the page is loaded
+// also, when a country is picked up from the list, the infoboxes number will change as well
+// in addition, those boxes will receive an onclick event
+
+function InfoBox({ title, cases, total, active,  ...props }) {
   return (
-    <Card className="infoBox_card">
+    <Card onClick={props.onClick} className={`infoBox_card ${active && 'infoBox_active'}`}>
       {/* each card content will contain: own title, own number, own current number of cases 
         and total number of cases  */}
-      <CardContent className="content">
+      <CardContent>
         {/* Title */}
-        <Overline className="infoBox_overline">{title}</Overline>
+        <Overline>{title}</Overline>
         {/* Number of cases */}
-        <Body className="infoBox_body">{cases}</Body>
+        <Body>{cases}</Body>
         {/* Total of deaths */}
-        <Caption className="infoBox_caption" color="textSecondary">
-          {total} total
+        <Caption>
+        {total} total
         </Caption>
       </CardContent>
     </Card>

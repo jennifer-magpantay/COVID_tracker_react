@@ -4,8 +4,8 @@ import { Line } from "react-chartjs-2";
 import numeral from "numeral";
 
 //to build our charts in a easy way, we to install react-chartjs-2
-
 //add options from the documenation project GitHUb - this is few sets to display the graphs????
+
 const options = {
   legend: {
     display: false,
@@ -54,8 +54,9 @@ const options = {
 // then, add the variable buildChart, outside the function Graph
 //to build the graph, you will need X and Y points to be filled with the data
 //you have to create a variable to transform the data how is collected (in form of a list/array) into these points
+
 const buildChartData = (data, casesType) => {
-  // define a variable with an empty array as value
+    // define a variable with an empty array as value
   const chartData = [];
   let lastDataPoint;
   //pass a for each loop to read each date of the data
@@ -77,6 +78,7 @@ const buildChartData = (data, casesType) => {
 };
 
 // finally, the function, that will use as param casesType
+
 function Graph({ casesType= "cases" }) {
   const [data, setData] = useState({});
 
@@ -96,7 +98,7 @@ function Graph({ casesType= "cases" }) {
 
   return (
     <Card className="graph_card">
-      <h4>SPREADING GRAPH&nbsp;&nbsp;|&nbsp;&nbsp;SINCE MARCH</h4>
+      <h4>SPREADING GRAPH&nbsp;&nbsp;|&nbsp;&nbsp;{casesType.toUpperCase()}</h4>
       <CardContent>
         {/* check if the data existis, if its lenght is greater than 0 */}
         {/* then, if the data existis, then, do whatever is inside () */}

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { FormControl, Select, MenuItem } from "@material-ui/core";
 import MainWrapper from "./MainWrapper";
 import Logo from "../assets/images/logo_app.png";
-import InfoBoxWrapper from './InfoBoxWrapper';
+import InfoBoxWrapper from "./InfoBoxWrapper";
 import InfoBox from "./InfoBox";
 import Wrapper from "./Wrapper";
 import Map from "./Map";
@@ -11,7 +11,7 @@ import AsideWrapper from "./AsideWrapper";
 import Table from "./Table";
 import Graph from "./Graph";
 import { sortData, PrintStat } from "../util";
-import numeral from 'numeral';
+import numeral from "numeral";
 
 const LogoApp = styled.img`
   width: 160px;
@@ -20,7 +20,6 @@ const LogoApp = styled.img`
     width: 120px;
   }
 `;
-
 
 //this is the main component of the app
 //here are set the main content (header, infobox, map) and aside content (table, graphs)
@@ -34,17 +33,18 @@ function Main() {
   const [countries, setCountries] = useState([]); //will set the countries that exist in the DB into an array
   const [country, setCountry] = useState("worldwide"); //will set the array of the countries inside the dropdown
   const [countryInfo, setCountryInfo] = useState({}); //will get the info about the a individual country
-  const [tableData, setTableData] = useState([]);
 
-  // useState for the map center & zoom props
-  const [mapCenter, setMapCenter] = useState({ lat: 0, lng: 0});
+  const [tableData, setTableData] = useState([]); //it will get and set data to populate the table - ranking by country
+
+  const [mapCenter, setMapCenter] = useState({ lat: 0, lng: 0 }); // useState for the map center & zoom props
   const [mapZoom, setMapZoom] = useState(1.5); //the value 3 gives enough zoom scale that would allows to see the entire map
   const [mapCountries, setMapCountries] = useState([]);
-  // useEffect: runs a piece of code based on a given condition
-  // useEffect(() => {},[]);
 
-  //reading the countries
-  //using the same function to set the tables
+  const [casesType, setCasesType] = useState("cases"); //it will be used to identify the type of data we are getting and to apply events and style according to each one
+
+  // useEffect: runs a piece of code based on a given condition - useEffect(() => {},[]);
+
+  //we will use this function to read the countries & to set the table content
   useEffect(() => {
     // the code will run once when the component is loaded ans not again
     // async: send a request, wait for it and do something
@@ -75,7 +75,7 @@ function Main() {
     fetch("https://disease.sh/v3/covid-19/all")
       .then((response) => response.json())
       .then((data) => {
-        setCountryInfo(data);            
+        setCountryInfo(data);
       });
   }, []);
 
@@ -100,16 +100,18 @@ function Main() {
         setCountry(countryCode);
         setCountryInfo(data);
 
-        setMapCenter([data.countryInfo.lat,
-          data.countryInfo.long]);
+        setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
         setMapZoom(4);
       });
   };
 
+  //then, we will build our main.js, getting all elements we will eed fot that
   return (
     <Wrapper>
+      {/* wrapper/content on the left side - main content */}
       <MainWrapper>
         <Wrapper>
+          {/* header: logo + dropdown menu */}
           <LogoApp src={Logo} alt="Logo Covid-19 Tracker" />
           <FormControl className="header_dropdown">
             <Select
@@ -130,41 +132,56 @@ function Main() {
 
         {/* adding here the info boxes */}
         <InfoBoxWrapper>
-        <h4>LIVE CASES&nbsp;&nbsp;|&nbsp;&nbsp;NUMBERS</h4>
-        <p className="caption">Data sourced from Worldometers, updated every 10 minutes</p>
-        <Wrapper>
-          {/* pass the variable countryInfo into each infobox to display the figures about eh choosen country */}
-          {/* to populate the boxes, get from API the cases registered today and the total */}
-         
-          <InfoBox
-            title="New Cases"
-            className="cases"
-            cases={PrintStat(countryInfo.todayCases)} 
-            total={numeral(countryInfo.cases).format(0,0)}
-          />
-          <InfoBox
-            title="Recovered"
-            className="recovered"
-            cases={PrintStat(countryInfo.todayRecovered)}
-            total={numeral(countryInfo.recovered).format(0,0)}
-                     />
-          <InfoBox
-            title="Deaths"
-            className="deaths"
-            cases={PrintStat(countryInfo.todayDeaths)}
-            total={numeral(countryInfo.deaths).format(0,0)}
-          />
-        </Wrapper>
+          <h4>LIVE CASES&nbsp;&nbsp;|&nbsp;&nbsp;NUMBERS</h4>
+          <p className="caption">
+            <em>Data sourced from Worldometers, updated every 10 minutes</em>
+          </p>
+          <Wrapper>
+            {/* pass the variable countryInfo into each infobox to display the figures about eh choosen country */}
+            {/* to populate the boxes, get from API the cases registered today and the total */}
+            {/* also, set onClick event to each infobox - when click on them, it will change the graphs */}
+            <InfoBox
+              onClick={(event) => setCasesType("cases")}
+              active={casesType === "cases"}
+              title="New Cases"
+              className="cases"
+              cases={PrintStat(countryInfo.todayCases)}
+              total={numeral(countryInfo.cases).format(0, 0)}
+            />
+            <InfoBox
+              onClick={(event) => setCasesType("recovered")}
+              active={casesType === "recovered"}
+              title="Recovered"
+              className="recovered"
+              cases={PrintStat(countryInfo.todayRecovered)}
+              total={numeral(countryInfo.recovered).format(0, 0)}
+            />
+            <InfoBox
+              onClick={(event) => setCasesType("deaths")}
+              active={casesType === "deaths"}
+              title="Deaths"
+              className="deaths"
+              cases={PrintStat(countryInfo.todayDeaths)}
+              total={numeral(countryInfo.deaths).format(0, 0)}
+            />
+          </Wrapper>
         </InfoBoxWrapper>
-        <Map 
-        countries={mapCountries}
-        center={mapCenter} zoom={mapZoom} />
+
+        {/* adding map */}
+        <Map
+          casesType={casesType}
+          countries={mapCountries}
+          center={mapCenter}
+          zoom={mapZoom}
+        />
       </MainWrapper>
 
-      {/* adding the aside content here */}
+      {/* wrapper/content on the right side */}
       <AsideWrapper>
+        {/* adding the aside content here */}
         <Table countries={tableData} />
-        <Graph />
+        {/* addin the graph content */}
+        <Graph casesType={casesType} />
       </AsideWrapper>
     </Wrapper>
   );
